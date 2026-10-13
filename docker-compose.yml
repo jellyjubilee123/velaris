@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: velaris
+      POSTGRES_PASSWORD: velaris
+      POSTGRES_DB: velaris
+    ports:
+      - "5432:5432"
+    volumes:
+      - velaris_pgdata:/var/lib/postgresql/data
+
+volumes:
+  velaris_pgdata:

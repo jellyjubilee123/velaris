@@ -1,0 +1,11 @@
+/home/hacker/velaris/backend/target/debug/deps/either-117a665855891fad.d: /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/lib.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged_optional.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/iterator.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/into_either.rs
+
+/home/hacker/velaris/backend/target/debug/deps/libeither-117a665855891fad.rlib: /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/lib.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged_optional.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/iterator.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/into_either.rs
+
+/home/hacker/velaris/backend/target/debug/deps/libeither-117a665855891fad.rmeta: /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/lib.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged_optional.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/iterator.rs /home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/into_either.rs
+
+/home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/lib.rs:
+/home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged.rs:
+/home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/serde_untagged_optional.rs:
+/home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/iterator.rs:
+/home/hacker/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/either-1.19.0/src/into_either.rs:

@@ -389,7 +389,7 @@ pub async fn suggest(
                     my_prefs.interests_weight,
                 );
                 println!("Score vs {}: {}", other.handle, score);
-                if score > 0.0 {
+                if true {
                     scored.push((other_id, score, other.handle.clone()));
                 }
             }

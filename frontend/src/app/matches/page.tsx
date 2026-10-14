@@ -122,7 +122,6 @@ export default function MatchesPage() {
             return;
         }
 
-        // Generate suggestions first, then load matches
         api(`/suggest/${id}`)
         .catch(console.error)
         .finally(() => {
@@ -164,7 +163,6 @@ export default function MatchesPage() {
         )}
 
         {matches.map((m) => {
-            const isMutual = m.status === "mutual";
             const canOptIn = m.status === "suggested";
 
             return (
@@ -186,7 +184,7 @@ export default function MatchesPage() {
                 )}
                 </div>
 
-                {isMutual && m.kestrel_code && userId && (
+                {m.kestrel_code && userId && (
                     <>
                     <div className="mt-3 p-3 bg-pink-50 border border-pink-200 rounded-xl">
                     <p className="text-sm font-semibold text-pink-500">Kestrel code</p>

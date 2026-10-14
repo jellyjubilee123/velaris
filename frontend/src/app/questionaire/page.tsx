@@ -163,40 +163,63 @@ export default function QuestionnairePage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-    <h1 className="text-2xl font-semibold mb-6">Your Profile</h1>
-    <form onSubmit={submit} className="space-y-10">
-
-    <section>
-    <h2 className="font-medium mb-2">Anatomical sex</h2>
-    <select className="border p-2 rounded w-full" value={sex} onChange={e => setSex(e.target.value)} required>
+    <div className="min-h-screen bg-white py-8 px-4">
+    <div className="max-w-2xl mx-auto">
+    <h1 className="text-4xl font-extrabold text-pink-500 text-center mb-8">
+    Your Profile
+    </h1>
+    <form onSubmit={submit} className="space-y-12">
+    {/* Anatomical sex */}
+    <section className="bg-white border border-pink-100 rounded-2xl p-6">
+    <h2 className="text-2xl font-bold text-pink-500 mb-4">Anatomical sex</h2>
+    <select
+    className="w-full border border-pink-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    value={sex}
+    onChange={(e) => setSex(e.target.value)}
+    required
+    >
     <option value="">Select</option>
     <option value="male">Male</option>
     <option value="female">Female</option>
     <option value="other">Other</option>
     </select>
-    <div className="mt-3">
-    <p className="text-sm mb-1">Interested in</p>
-    {["male", "female", "other"].map(s => (
-      <label key={s} className="mr-4 text-sm">
-      <input type="checkbox" checked={sexPref.includes(s)} onChange={() => toggleSexPref(s)} /> {s}
+    <div className="mt-4">
+    <p className="text-sm font-semibold text-pink-500 mb-2">Interested in</p>
+    <div className="flex flex-wrap gap-4">
+    {["male", "female", "other"].map((s) => (
+      <label key={s} className="flex items-center gap-2 text-sm">
+      <input
+      type="checkbox"
+      checked={sexPref.includes(s)}
+      onChange={() => toggleSexPref(s)}
+      className="accent-pink-500"
+      />
+      {s}
       </label>
     ))}
     </div>
+    </div>
     </section>
 
-    <section>
-    <h2 className="font-medium mb-4">Personality (1 = strongly disagree, 5 = strongly agree)</h2>
-    {PERSONALITY_QUESTIONS.map(q => (
-      <div key={q.key} className="mb-4">
-      <p className="text-sm mb-1">{q.text}</p>
+    {/* Personality */}
+    <section className="bg-white border border-pink-100 rounded-2xl p-6">
+    <h2 className="text-2xl font-bold text-pink-500 mb-6">
+    Personality <span className="text-base font-normal text-gray-600">(1 = strongly disagree, 5 = strongly agree)</span>
+    </h2>
+    {PERSONALITY_QUESTIONS.map((q) => (
+      <div key={q.key} className="mb-6">
+      <p className="text-sm mb-2">{q.text}</p>
       <div className="flex gap-2">
-      {[1, 2, 3, 4, 5].map(n => (
+      {[1, 2, 3, 4, 5].map((n) => (
         <button
         key={n}
         type="button"
         onClick={() => setPersonalityScore(q.key, n)}
-        className={`px-3 py-1 border rounded text-sm ${personality[q.key] === n ? "bg-black text-white" : ""}`}
+        className={`w-10 h-10 rounded-full border text-sm font-semibold transition ${
+          personality[q.key] === n
+          ? "bg-black text-white border-black"
+          : "border-pink-200 hover:bg-pink-50"
+        }`}
         >
         {n}
         </button>
@@ -206,14 +229,20 @@ export default function QuestionnairePage() {
     ))}
     </section>
 
-    <section>
-    <h2 className="font-medium mb-4">Cognitive reasoning (50 questions)</h2>
-    <p className="text-sm text-gray-500 mb-4">This is a reasoning quiz used for matching bands, not a clinical IQ test.</p>
+    {/* Cognitive */}
+    <section className="bg-white border border-pink-100 rounded-2xl p-6">
+    <h2 className="text-2xl font-bold text-pink-500 mb-2">Cognitive reasoning</h2>
+    <p className="text-sm text-gray-500 mb-6">
+    50 questions used for matching bands, not a clinical IQ test.
+    </p>
     {COGNITIVE_QUESTIONS.map((cq, i) => (
-      <div key={i} className="mb-5 pb-3 border-b">
-      <p className="text-sm mb-2"><span className="font-medium">{i + 1}.</span> {cq.q}</p>
+      <div key={i} className="mb-6 pb-4 border-b border-pink-50">
+      <p className="text-sm mb-3">
+      <span className="font-semibold text-pink-500">{i + 1}.</span> {cq.q}
+      </p>
+      <div className="space-y-2">
       {cq.options.map((opt, oi) => (
-        <label key={oi} className="block text-sm mb-1">
+        <label key={oi} className="flex items-center gap-2 text-sm cursor-pointer">
         <input
         type="radio"
         name={`cog-${i}`}
@@ -223,25 +252,48 @@ export default function QuestionnairePage() {
           next[i] = oi;
           setCognitiveAnswers(next);
         }}
-        />{" "}
+        className="accent-pink-500"
+        />
         {opt}
         </label>
       ))}
       </div>
+      </div>
     ))}
     </section>
 
-    <section>
-    <h2 className="font-medium mb-2">Values, lifestyle & interests</h2>
-    <input className="w-full border p-2 rounded mb-2" placeholder="Values (comma separated)" value={values} onChange={e => setValues(e.target.value)} />
-    <input className="w-full border p-2 rounded mb-2" placeholder="Lifestyle (comma separated)" value={lifestyle} onChange={e => setLifestyle(e.target.value)} />
-    <input className="w-full border p-2 rounded" placeholder="Interests (comma separated)" value={interests} onChange={e => setInterests(e.target.value)} />
+    {/* Values, lifestyle, interests */}
+    <section className="bg-white border border-pink-100 rounded-2xl p-6">
+    <h2 className="text-2xl font-bold text-pink-500 mb-4">Values, lifestyle & interests</h2>
+    <input
+    className="w-full border border-pink-200 rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    placeholder="Values (comma separated)"
+    value={values}
+    onChange={(e) => setValues(e.target.value)}
+    />
+    <input
+    className="w-full border border-pink-200 rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    placeholder="Lifestyle (comma separated)"
+    value={lifestyle}
+    onChange={(e) => setLifestyle(e.target.value)}
+    />
+    <input
+    className="w-full border border-pink-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    placeholder="Interests (comma separated)"
+    value={interests}
+    onChange={(e) => setInterests(e.target.value)}
+    />
     </section>
 
-    <button type="submit" disabled={loading} className="w-full bg-black text-white p-2 rounded disabled:opacity-50">
+    <button
+    type="submit"
+    disabled={loading}
+    className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-full transition disabled:opacity-50"
+    >
     {loading ? "Saving…" : "Save & continue"}
     </button>
     </form>
+    </div>
     </div>
   );
 }

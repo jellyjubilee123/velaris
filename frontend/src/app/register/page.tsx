@@ -35,13 +35,18 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-20 p-6 border rounded-lg shadow-sm">
-        <h1 className="text-2xl font-semibold mb-6">Create Velaris Account</h1>
-        <form onSubmit={handleRegister} className="space-y-4">
+        <div className="min-h-[80vh] flex items-center justify-center bg-white px-4">
+        <div className="w-full max-w-md bg-white border border-pink-100 rounded-2xl shadow-sm p-8">
+        <h1 className="text-4xl font-extrabold text-pink-500 text-center mb-6">
+        Create Account
+        </h1>
+        <form onSubmit={handleRegister} className="space-y-5">
         <div>
-        <label className="block text-sm mb-1">Handle</label>
+        <label className="block text-sm font-semibold text-pink-500 mb-1">
+        Handle
+        </label>
         <input
-        className="w-full border p-2 rounded"
+        className="w-full border border-pink-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
         placeholder="Choose a handle"
         value={handle}
         onChange={(e) => setHandle(e.target.value)}
@@ -49,33 +54,36 @@ export default function RegisterPage() {
         />
         </div>
         <div>
-        <label className="block text-sm mb-1">Password</label>
+        <label className="block text-sm font-semibold text-pink-500 mb-1">
+        Password
+        </label>
         <input
-        className="w-full border p-2 rounded"
+        className="w-full border border-pink-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
         type="password"
-        placeholder="Password"
+        placeholder="Password (min 6 characters)"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
         minLength={6}
         />
         </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        {message && <p className="text-green-600 text-sm">{message}</p>}
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        {message && <p className="text-green-600 text-sm text-center">{message}</p>}
         <button
-        className="w-full bg-black text-white p-2 rounded disabled:opacity-50"
+        className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-full transition disabled:opacity-50"
         type="submit"
         disabled={loading}
         >
         {loading ? "Creating..." : "Register"}
         </button>
         </form>
-        <p className="text-sm text-center mt-4">
+        <p className="text-sm text-center mt-6 text-gray-600">
         Already have an account?{" "}
-        <Link href="/login" className="underline">
+        <Link href="/login" className="text-pink-500 font-semibold hover:underline">
         Log in
         </Link>
         </p>
+        </div>
         </div>
     );
 }

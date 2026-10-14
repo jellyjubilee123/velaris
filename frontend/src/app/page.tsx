@@ -1,69 +1,95 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="bg-white text-gray-900">
+    {/* Hero */}
+    <section className="flex flex-col items-center justify-center min-h-[70vh] px-6 text-center">
+    <h1 className="text-6xl md:text-8xl font-extrabold text-pink-500 tracking-tight mb-4">
+    Velaris
+    </h1>
+    <p className="text-xl md:text-2xl text-pink-400 font-semibold mb-6 max-w-lg">
+    Privacy-first matching.<br />Real connections. No nonsense.
+    </p>
+    <p className="text-lg text-gray-600 mb-8 max-w-md">
+    Values, lifestyle, personality, and cognitive compatibility — without the superficial stuff.
+    </p>
+    <div className="flex flex-col sm:flex-row gap-4">
+    <Link
+    href="/register"
+    className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full text-lg transition"
+    >
+    Get Started
+    </Link>
+    <Link
+    href="/login"
+    className="border-2 border-pink-500 text-pink-500 hover:bg-pink-50 font-bold py-3 px-8 rounded-full text-lg transition"
+    >
+    Log In
+    </Link>
+    </div>
+    </section>
+
+    {/* Features */}
+    <section className="py-16 px-6 bg-pink-50">
+    <h2 className="text-4xl font-extrabold text-pink-500 text-center mb-12">
+    Why Velaris?
+    </h2>
+    <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+    <div>
+    <h3 className="text-2xl font-bold text-pink-500 mb-2">Privacy First</h3>
+    <p className="text-gray-700">
+    Region only. No exact location. Anonymous chat via short-lived codes.
+    </p>
+    </div>
+    <div>
+    <h3 className="text-2xl font-bold text-pink-500 mb-2">Real Matching</h3>
+    <p className="text-gray-700">
+    Values, lifestyle, interests, personality, and cognitive score. No income or looks.
+    </p>
+    </div>
+    <div>
+    <h3 className="text-2xl font-bold text-pink-500 mb-2">Honesty Encouraged</h3>
+    <p className="text-gray-700">
+    Built to reward genuine answers instead of gaming the system.
+    </p>
+    </div>
+    </div>
+    </section>
+
+    {/* How it works */}
+    <section className="py-16 px-6">
+    <h2 className="text-4xl font-extrabold text-pink-500 text-center mb-12">
+    How it works
+    </h2>
+    <div className="max-w-2xl mx-auto space-y-6 text-center">
+    <div>
+    <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">1</span>
+    <p className="text-lg">Create your account and set your preferences.</p>
+    </div>
+    <div>
+    <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">2</span>
+    <p className="text-lg">Answer the personality + cognitive questionnaire.</p>
+    </div>
+    <div>
+    <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">3</span>
+    <p className="text-lg">Get matched and opt in when it feels right.</p>
+    </div>
+    </div>
+    </section>
+
+    {/* Final CTA */}
+    <section className="py-20 px-6 text-center bg-pink-50">
+    <h2 className="text-4xl font-extrabold text-pink-500 mb-6">
+    Ready to find someone real?
+    </h2>
+    <Link
+    href="/register"
+    className="inline-block bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-10 rounded-full text-xl transition"
+    >
+    Join Velaris
+    </Link>
+    </section>
     </div>
   );
 }

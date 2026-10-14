@@ -45,7 +45,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .layer(CorsLayer::permissive())
     .with_state(pool);
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    // Bind to 0.0.0.0 and respect PORT (Railway sets this)
+    let port = std::env::var("PORT")
+    .ok()
+    .and_then(|p| p.parse().ok())
+    .unwrap_or(3000);
+
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
     println!("Velaris listening on {}", addr);
     axum::serve(tokio::net::TcpListener::bind(addr).await?, app).await?;
 

@@ -198,6 +198,18 @@ export default function MatchesPage() {
             );
         })}
         </div>
+
+        {/* Always-visible chat section */}
+        {userId && (
+            <div className="mt-8 border border-pink-100 rounded-2xl p-5">
+            <h2 className="text-2xl font-bold text-pink-500 mb-4">Chat</h2>
+            <p className="text-sm text-gray-500 mb-4">
+            Opt in to a match above to get a code and start chatting.
+            </p>
+            {/* Uncomment and use a real code to test chat immediately */}
+            {/* <ChatBox code="testcode123" userId={userId} /> */}
+            </div>
+        )}
         </div>
     );
 }

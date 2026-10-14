@@ -39,6 +39,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .route("/suggest/:user_id", get(routes::suggest))
     .route("/opt-in", post(routes::opt_in))
     .route("/matches/:user_id", get(routes::list_matches))
+    .route("/chat/:code", post(routes::send_message).get(routes::get_messages))
     // Premium & seed
     .route("/premium", post(routes::set_premium))
     .route("/seed", post(routes::seed))

@@ -492,6 +492,52 @@ pub async fn list_matches(
     Ok(Json(matches))
 }
 
+// ---------- Chat ----------
+
+pub async fn send_message(
+    State(pool): State<PgPool>,
+                          headers: HeaderMap,
+                          Path(code): Path<String>,
+                          Json(payload): Json<serde_json::Value>,
+) -> Result<StatusCode, StatusCode> {
+    let user_id = require_user(&headers)?;
+    let body = payload["body"].as_str().ok_or(StatusCode::BAD_REQUEST)?;
+
+    sqlx::query(
+        "INSERT INTO messages (code, sender_id, body, expires_at) VALUES ($1, $2, $3, now() + interval '24 hours')",
+    )
+    .bind(&code)
+    .bind(user_id)
+    .bind(body)
+    .execute(&pool)
+    .await
+    .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    Ok(StatusCode::OK)
+}
+
+pub async fn get_messages(
+    State(pool): State<PgPool>,
+                          Path(code): Path<String>,
+) -> Result<Json<Vec<serde_json::Value>>, StatusCode> {
+    let rows = sqlx::query_as::<_, (String, String, chrono::DateTime<Utc>)>(
+        "SELECT body, sender_id::text, created_at FROM messages WHERE code = $1 AND expires_at > now() ORDER BY created_at",
+    )
+    .bind(&code)
+    .fetch_all(&pool)
+    .await
+    .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let messages: Vec<_> = rows
+    .into_iter()
+    .map(|(body, sender, created)| {
+        serde_json::json!({ "body": body, "sender": sender, "created_at": created })
+    })
+    .collect();
+
+    Ok(Json(messages))
+}
+
 // ---------- Premium ----------
 
 pub async fn set_premium(

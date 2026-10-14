@@ -44,7 +44,7 @@ pub fn compatibility(
     let interests_sim = jaccard(&me.interests, &other.interests);
 
     let personality_sim = personality_similarity(&me.personality, &other.personality);
-    let personality_score = if personality_sim >= 0.80 { 1.0 } else { personality_sim };
+    let personality_score = if personality_sim >= 0.01 { 1.0 } else { personality_sim };
 
     let cognitive_score = cognitive_similarity(me, other);
 
@@ -85,7 +85,7 @@ fn cognitive_similarity(me: &Profile, other: &Profile) -> f32 {
     if let (Some(ms), Some(os)) = (me.cognitive_score, other.cognitive_score) {
         let diff = (ms as f32 - os as f32).abs();
         let sim = 1.0 - (diff / 100.0);
-        return if sim >= 0.80 { 1.0 } else { sim };
+        return if sim >= 0.05 { 1.0 } else { sim };
     }
 
     match (&me.cognitive_band, &other.cognitive_band) {

@@ -55,7 +55,6 @@ function ChatBox({ code, userId }: { code: string; userId: string }) {
                 body: JSON.stringify({ body: input }),
             });
             setInput("");
-            // quick refresh
             const data = await api<Message[]>(`/chat/${code}`);
             setMessages(data);
         } catch (e) {
@@ -118,12 +117,20 @@ export default function MatchesPage() {
     useEffect(() => {
         const id = localStorage.getItem("user_id");
         setUserId(id);
-        if (!id) return;
+        if (!id) {
+            setLoading(false);
+            return;
+        }
 
-        api<Match[]>(`/matches/${id}`)
-        .then(setMatches)
+        // Generate suggestions first, then load matches
+        api(`/suggest/${id}`)
         .catch(console.error)
-        .finally(() => setLoading(false));
+        .finally(() => {
+            api<Match[]>(`/matches/${id}`)
+            .then(setMatches)
+            .catch(console.error)
+            .finally(() => setLoading(false));
+        });
     }, []);
 
     async function optIn(matchId: string) {

@@ -65,7 +65,7 @@ export default function Home() {
     <div className="max-w-2xl mx-auto space-y-6 text-center">
     <div>
     <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">1</span>
-    <p className="text-lg">Create your account and set your preferences.</p>
+    <p className="text-lg">Create your account.</p>
     </div>
     <div>
     <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">2</span>
@@ -73,6 +73,10 @@ export default function Home() {
     </div>
     <div>
     <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">3</span>
+    <p className="text-lg">Set your preferences.</p>
+    </div>
+    <div>
+    <span className="inline-block bg-pink-500 text-white font-bold rounded-full w-8 h-8 leading-8 mb-2">4</span>
     <p className="text-lg">Get matched and opt in when it feels right.</p>
     </div>
     </div>

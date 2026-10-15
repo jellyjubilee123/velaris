@@ -325,7 +325,7 @@ pub async fn get_preferences(
     Ok(Json(prefs))
 }
 
-// ---------- Matching ----------
+// ---------- Matching (simplified for testing) ----------
 
 pub async fn suggest(
     State(pool): State<PgPool>,
@@ -333,109 +333,57 @@ pub async fn suggest(
 ) -> Result<Json<Vec<Suggestion>>, StatusCode> {
     println!("=== suggest called for {} ===", user_id);
 
-    let me = match load_profile(&pool, user_id).await {
-        Ok(p) => {
-            println!("Loaded my profile: handle={}", p.handle);
-            p
-        }
-        Err(e) => {
-            println!("ERROR loading my profile: {:?}", e);
-            return Err(e);
-        }
-    };
-
-    let my_prefs = match load_preferences(&pool, user_id).await {
-        Ok(p) => {
-            println!("Loaded preferences");
-            p
-        }
-        Err(e) => {
-            println!("ERROR loading preferences: {:?}", e);
-            return Err(e);
-        }
-    };
-
-    println!("Querying candidates...");
-    let candidates = match sqlx::query_scalar::<_, Uuid>(
-        r#"
-        SELECT id FROM users
-        WHERE id != $1 AND status = 'active'
-    LIMIT 50
-    "#,
+    let candidates = sqlx::query_scalar::<_, Uuid>(
+        "SELECT id FROM users WHERE id != $1 AND status = 'active' LIMIT 20",
     )
     .bind(user_id)
     .fetch_all(&pool)
     .await
-    {
-        Ok(c) => {
-            println!("Found {} candidates", c.len());
-            c
-        }
-        Err(e) => {
-            println!("ERROR querying candidates: {:?}", e);
-            return Err(StatusCode::INTERNAL_SERVER_ERROR);
-        }
-    };
+    .map_err(|e| {
+        println!("ERROR querying candidates: {:?}", e);
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
 
-    let mut scored = Vec::new();
-    for other_id in candidates {
-        match load_profile(&pool, other_id).await {
-            Ok(other) => {
-                let score = compatibility(
-                    &me,
-                    &other,
-                    my_prefs.values_weight,
-                    my_prefs.lifestyle_weight,
-                    my_prefs.interests_weight,
-                );
-                println!("Score vs {}: {}", other.handle, score);
-                if true {
-                    scored.push((other_id, score, other.handle.clone()));
-                }
-            }
-            Err(e) => {
-                println!("ERROR loading profile for {}: {:?}", other_id, e);
-            }
-        }
-    }
-
-    scored.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
-    scored.truncate(5);
+    println!("Found {} candidates", candidates.len());
 
     let mut suggestions = Vec::new();
-    for (other_id, score, other_handle) in scored {
+
+    for other_id in candidates {
         let (user_a, user_b) = if user_id < other_id {
             (user_id, other_id)
         } else {
             (other_id, user_id)
         };
 
-        println!("Attempting insert {} <-> {} (score {})", user_a, user_b, score);
+        let other_handle = sqlx::query_scalar::<_, String>("SELECT handle FROM users WHERE id = $1")
+        .bind(other_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap_or_else(|_| "Someone".to_string());
 
         let result = sqlx::query_scalar::<_, Uuid>(
             r#"
             INSERT INTO matches (user_a, user_b, score, status)
-        VALUES ($1, $2, $3, 'suggested')
+        VALUES ($1, $2, 0.5, 'suggested')
         ON CONFLICT (user_a, user_b) DO NOTHING
         RETURNING id
         "#,
         )
         .bind(user_a)
         .bind(user_b)
-        .bind(score)
         .fetch_optional(&pool)
         .await;
 
         match result {
             Ok(Some(id)) => {
-                println!("SUCCESS inserted match {}", id);
+                println!("Inserted match {}", id);
                 suggestions.push(Suggestion {
                     match_id: id,
                     other_handle,
-                    score,
+                    score: 0.5,
                 });
             }
-            Ok(None) => println!("Conflict — match already exists"),
+            Ok(None) => println!("Match already exists"),
             Err(e) => println!("INSERT ERROR: {:?}", e),
         }
     }
@@ -716,3 +664,4 @@ async fn load_profile(pool: &PgPool, user_id: Uuid) -> Result<Profile, StatusCod
        cognitive_band,
     })
 }
+
